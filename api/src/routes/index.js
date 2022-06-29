@@ -14,6 +14,6 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 const { listCountries } = require("../models/models")
-router.get('/', listCountries);
+router.get('/countries', listCountries);
 
 module.exports = router;

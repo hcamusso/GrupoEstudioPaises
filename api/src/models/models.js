@@ -14,14 +14,14 @@ exports.listCountries = async (req,res) => {
         console.log(data.length)
         const paises = data.map((pais) => {
             return {
-                id: pais.ccn3,
+                code: pais.ccn3,
+                name: pais.name.common,
+                continent: pais.region,
                 capital: pais.capital ? pais.capital[0] : 'Capital no encontrada',
                 subregion: pais.subregion,
                 area: pais.area,
-                poblacion: pais.population,
+                population: pais.population,
                 bandera: pais.flag,
-                nombre: pais.name.common,
-                continente: pais.region
             };
         });
     // }
