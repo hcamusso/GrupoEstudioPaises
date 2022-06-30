@@ -9,9 +9,7 @@ import {
   getActivities,
   ordenActividades,
 } from '../actions/index';
-import Card from '../../../client/src/components/Card.jsx';
 import Countries from '../components/Card';
-import Activity from '../../../client/src/components/Activity.jsx';
 import Paginacion from './Paginado';
 // import SearchBar from "../../../client/src/components/SearchBar.jsx";
 import Buscador from '../components/buscador';
@@ -24,9 +22,9 @@ export default function Home() {
   const allCountries = useSelector(state => state.countryAll);
   const continentFiltro = useSelector(state => state.continentFiltro);
   const activities = useSelector(state => state.activities);
-  const [orden, setOrden] = useState('');
-  const [ordenPorPoblacion, setOrdenPorPoblacion] = useState('');
-  const [filtroClick, setFiltroClick] = useState(false);
+  const [setOrden] = useState('');
+  const [ setOrdenPorPoblacion] = useState('');
+  
   const [paises, setPaises] = useState([]);
   const [curretPage, setCurrentPage] = useState(1);
   const [countriesPorPagina, setcountriesPorPagina] = useState(9);
