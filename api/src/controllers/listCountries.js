@@ -17,7 +17,7 @@ exports.listCountries = async (req,res) => {
         console.log(data.length)
         const paises = data.map((pais) => {
             return {
-                code: pais.ccn3,
+                idCountry: pais.ccn3,
                 name: pais.name.common,
                 continent: pais.region,
                 capital: pais.capital ? pais.capital[0] : 'Capital no encontrada',

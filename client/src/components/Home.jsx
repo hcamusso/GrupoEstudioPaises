@@ -2,96 +2,89 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getApiTotal,
-  ordenAsc,
-  ordenPoblacion,
-  ordenContinente,
-  getActivities,
-  ordenActividades,
+  getApiTotal
 } from '../actions/index';
 import Countries from '../components/Card';
 import Paginacion from './Paginado';
-import Buscador from '../components/Search.jsx';
-import Footer from './Footer';
+//import Buscador from '../components/Search.jsx';
+//import Footer from './Footer';
 
 import S from '../../../client/src/styles/Home.module.css';
 
 export default function Home() {
   const dispatch = useDispatch();
   const allCountries = useSelector(state => state.countryAll);
-  const activities = useSelector(state => state.activities);
-  const [setOrden] = useState('');
-  const [setOrdenPorPoblacion] = useState('');
-  const [curretPage, setCurrentPage] = useState(1);
-  const [countriesPorPagina] = useState(9);
-  const indexCountriesLast = curretPage * countriesPorPagina;
-  const indexCountriesFirst = indexCountriesLast - countriesPorPagina;
-  const currentCountries = allCountries.slice(
-    indexCountriesFirst,
-    indexCountriesLast
-  );
+  // const activities = useSelector(state => state.activities);
+  // const [curretPage, setCurrentPage] = useState(1);
+  // const [countriesPorPagina] = useState(9);
+  // const indexCountriesLast = curretPage * countriesPorPagina;
+  // const indexCountriesFirst = indexCountriesLast - countriesPorPagina;
+  // const currentCountries = allCountries.slice(
+  //   indexCountriesFirst,
+  //   indexCountriesLast
+  //);
 
-  const paginado = pageNumber => {
-    let page = curretPage;
-    if (pageNumber === 'inicio') {
-      setCurrentPage(1);
-    } else if (pageNumber === 'final') {
-      setCurrentPage(Math.ceil(allCountries.length / countriesPorPagina));
-    } else if (
-      pageNumber === 'siguiente' &&
-      curretPage < Math.ceil(allCountries.length / countriesPorPagina)
-    ) {
-      page = curretPage + 1;
-      setCurrentPage(page);
-    } else if (pageNumber === 'anterior' && curretPage > 1) {
-      page = curretPage - 1;
-      setCurrentPage(page);
-    } else if (typeof pageNumber === 'number') {
-      setCurrentPage(pageNumber);
-    }
-  };
+  // const paginado = pageNumber => {
+  //   let page = curretPage;
+  //   if (pageNumber === 'inicio') {
+  //     setCurrentPage(1);
+  //   } else if (pageNumber === 'final') {
+  //     setCurrentPage(Math.ceil(allCountries.length / countriesPorPagina));
+  //   } else if (
+  //     pageNumber === 'siguiente' &&
+  //     curretPage < Math.ceil(allCountries.length / countriesPorPagina)
+  //   ) {
+  //     page = curretPage + 1;
+  //     setCurrentPage(page);
+  //   } else if (pageNumber === 'anterior' && curretPage > 1) {
+  //     page = curretPage - 1;
+  //     setCurrentPage(page);
+  //   } else if (typeof pageNumber === 'number') {
+  //     setCurrentPage(pageNumber);
+  //   }
+  // };
 
   useEffect(() => {
     dispatch(getApiTotal());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getActivities());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getActivities());
+  // }, []);
 
-  function handleFilterOrder(e) {
-    e.preventDefault();
-    dispatch(ordenAsc(e.target.value));
-    setCurrentPage(1);
-    setOrden(`${e.target.value}`);
-  }
+  // function handleFilterOrder(e) {
+  //   e.preventDefault();
+  //   dispatch(ordenAsc(e.target.value));
+  //   setCurrentPage(1);
+  //   setOrden(`${e.target.value}`);
+  // }
 
-  function handleFilterPoblacion(e) {
-    e.preventDefault();
-    dispatch(ordenPoblacion(e.target.value));
-    setCurrentPage(1);
-    setOrdenPorPoblacion(`${e.target.value}`);
-  }
+  // function handleFilterPoblacion(e) {
+  //   e.preventDefault();
+  //   dispatch(ordenPoblacion(e.target.value));
+  //   setCurrentPage(1);
+  //   setOrdenPorPoblacion(`${e.target.value}`);
+  // }
 
-  function handleOrdenContinente(e) {
-    e.preventDefault();
-    dispatch(ordenContinente(e.target.value));
-    setCurrentPage(1);
-    setOrden(`${e.target.value}`);
-  }
+  // function handleOrdenContinente(e) {
+  //   e.preventDefault();
+  //   dispatch(ordenContinente(e.target.value));
+  //   setCurrentPage(1);
+  //   setOrden(`${e.target.value}`);
+  // }
 
-  function handleOrdenActivity(e) {
-    e.preventDefault();
-    dispatch(ordenActividades(e.target.value));
-    setCurrentPage(1);
-    setOrden(`${e.target.value}`);
-  }
+  // function handleOrdenActivity(e) {
+  //   e.preventDefault();
+  //   dispatch(ordenActividades(e.target.value));
+  //   setCurrentPage(1);
+  //   setOrden(`${e.target.value}`);
+  // }
 
   return (
     <div className={S.containerHome}>
       <h1 className={S.tituloPrincipal}>Countries App</h1>
 
-      <div className={S.navbar}>
+       {/* <div className={S.navbar}>
         <div className={S.selectTwo}>
           <label htmlFor="">Orden alfabético</label>
           <select
@@ -172,25 +165,25 @@ export default function Home() {
         countriesPorPagina={countriesPorPagina}
         allCountries={allCountries.length}
         paginado={paginado}
-      />
+      /> */}
 
       <div className={S.conteinerCards}>
-        {currentCountries?.map(e => {
+        {allCountries.map(e => {
           return (
             <div key={e.idPais}>
               <Countries
-                idPais={e.idPais}
-                imagen={e.imagen}
+                idCountry={e.idCountry}
+                bandera={e.bandera}
                 name={e.name}
-                continente={e.continente}
-                poblacion={e.poblacion}
+                continent={e.continent}
+                population={e.population}
               />
             </div>
           );
         })}
       </div>
 
-      <Footer />
+      {/* <Footer />  */}
     </div>
   );
 }

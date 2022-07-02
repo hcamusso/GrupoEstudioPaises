@@ -1,0 +1,40 @@
+.conteinerCards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.tituloPrincipal{
+    color:  white;
+    font-size: 50px;
+}
+.navbar{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
+
+.selectOne{
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+.selectOne label{
+    margin-right: 5px;
+}
+.selectOne select{
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.selectOne select:focus{
+    transition: all 0.2s ease;
+    background-color: rgba(0, 128, 0, 0.634);
+    color: white;
+}

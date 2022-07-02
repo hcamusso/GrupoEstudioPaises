@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING, 
       allowNull: false,
     },
-    imagen:{ 
+    bandera:{ 
       type: DataTypes.TEXT, 
       validate: {isUrl: true}
     },

@@ -1,5 +1,5 @@
-import axios from 'axios';
-
+//import axios from 'axios';
+const axios = require('axios');
 //todos los paises
 export function getApiTotal(payload) {
   return function (dispatch) {
