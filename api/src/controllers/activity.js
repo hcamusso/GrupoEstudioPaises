@@ -2,37 +2,26 @@
 //   - Crea una actividad turística en la base de datos
 
 const axios = require('axios');
+const { Country, Activity } = require('../db.js')
 //logica de las funciones que van a resolver cada ruta
-let primerVez = false;
-
-let turismo = [];
-let paisturismo = [];
-
-
-
-exports.listCountries = async (req,res) => {
-// if (!primerVez){
-    const { data } = await axios('https://restcountries.com/v3/all')
-    // if(data.length){
-        console.log(data.length)
-        const paises = data.map((pais) => {
-            return {
-                code: pais.ccn3,
-                name: pais.name.common,
-                continent: pais.region,
-                capital: pais.capital ? pais.capital[0] : 'Capital no encontrada',
-                subregion: pais.subregion,
-                area: pais.area,
-                population: pais.population,
-                bandera: pais.flag,
-            };
+exports.activity = async (req,res) => {
+    const { name, dificultad, duracion, temporada , countries} = req.body;
+    try {
+        const newActivity = await Activity.create({
+            name, dificultad, duracion, temporada
         });
-    // }
-    
-    console.log(paises,'paises',paises.length)
-    
-    primerVez=true
-// }
+        //conecto con country atravez de la relacion n:n
 
-return res.status(200).send(paises)
+        countries.map(async countryId => {
+            const foundCountry = await Country.findAll({
+              where: { idCountry: countryId },
+            });
+            if (foundCountry) newActivity.addCountries(foundCountry);
+        });
+
+        res.status(202).send("La actividad ha sido creada exitosamente");
+    } catch (error) {
+        res.status(400).send(error)
+    }
+
 };

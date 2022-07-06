@@ -2,37 +2,34 @@
 //   - En una primera instancia deberán traer todos los países desde restcountries y guardarlos en su propia base de datos y luego ya utilizarlos desde allí (Debe almacenar solo los datos necesarios para la ruta principal)
 //   - Obtener un listado de los paises.
 const axios = require('axios');
+const { Op } = require("sequelize");
+const { countryDetail } = require('./countryDetail');
+const { Country } = require('../db.js')
 //logica de las funciones que van a resolver cada ruta
-let primerVez = false;
-
-let turismo = [];
-let paisturismo = [];
-
-
 
 exports.listCountries = async (req,res) => {
-// if (!primerVez){
-    const { data } = await axios('https://restcountries.com/v3/all')
-    // if(data.length){
-        console.log(data.length)
-        const paises = data.map((pais) => {
-            return {
-                code: pais.ccn3,
-                name: pais.name.common,
-                continent: pais.region,
-                capital: pais.capital ? pais.capital[0] : 'Capital no encontrada',
-                subregion: pais.subregion,
-                area: pais.area,
-                population: pais.population,
-                bandera: pais.flag,
-            };
-        });
-    // }
-    
-    console.log(paises,'paises',paises.length)
-    
-    primerVez=true
-// }
+    const { name } = req.query;
+    console.log(name)
+    try {
+        if(name) {
+            console.log('dentro ')
+            let pais = await Country.findAll({
+                where: {
+                  name: {
+                    [Op.iLike]: `%${name}%`,
+                  },
+                },
+                
+              });
+           
+            return res.status(201).json(pais);
+        }
+        const paises = await Country.findAll();
+       console.log('ruta listCountries')
+       return res.status(200).json(paises)
+    } catch (error) {
+        res.status(400).send(error)
+    }
 
-return res.status(200).send(paises)
+
 };

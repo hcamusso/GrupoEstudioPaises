@@ -4,96 +4,26 @@
 //   - Incluir los datos de las actividades turísticas correspondientes
 
 const axios = require('axios');
+const { Country, Activity } = require('../db.js')
 //logica de las funciones que van a resolver cada ruta
-let primerVez = false;
-
-let turismo = [{
-    idActivity: 1,
-    name: "rafting",
-    dificulty: 1,
-    duration: 2,
-    season: "verano"
-    },
-    {
-        idActivity: 2,
-        name: "sky",
-        dificulty: 5,
-        duration: 4,
-        season: "invierno"  
-    },
-    {
-        idActivity: 3,
-        name: "avistaje de aves",
-        dificulty: 1,
-        duration: 3,
-        season: "primavera"  
-    },    {
-        idActivity: 4,
-        name: "treking",
-        dificulty: 5,
-        duration: 1,
-        season: "otoño"  
-    }
-    ];
-let paisturismo = [{
-    "activity_idActivity" : 1,
-    "country_idCountry": "250",
-},
-{
-    "activity_idActivity" : 4,
-    "country_idCountry": "250",
-},
-];
-
-
 
 exports.countryDetail = async (req,res) => {
 
 const { idPais } = req.params;
-//Reemplar esto por la consulta a la base de datos
-    
-    const { data } = await axios('https://restcountries.com/v3/all')
-    // if(data.length){
-        console.log(data.length)
-        const paises = data.map((pais) => {
-            return {
-                code: pais.ccn3,
-                name: pais.name.common,
-                continent: pais.region,
-                capital: pais.capital ? pais.capital[0] : 'Capital no encontrada',
-                subregion: pais.subregion,
-                area: pais.area,
-                population: pais.population,
-                bandera: pais.flag,
-            };
-        });
-    
-    const countryDetail = paises.find((pais) => pais.code === idPais);
-    console.log(countryDetail,'countryDetail')
-    console.log(paisturismo,'paisturismo')
-    const idsActividades = paisturismo.filter((e) => e.country_idCountry === idPais);
-    console.log(idsActividades,'idsActividades')
-    // recorro todo el arreglo de idsActividades
-    const detalleActividades =[];
-    for (let index = 0; index < idsActividades.length; index++) {
-        const element = idsActividades[index];
-        console.log(element, 'element')
-        detalleActividades.push(turismo.find((e) => e.idActivity === element.activity_idActivity))
+
+try{
+    let pais = await Country.findByPk(idPais.toUpperCase(), {include: {model: Activity}})
+
+    res.status(201).json(pais);
+}
+catch(err){
+    if(!idPais){
+        res.status(400).send({err: "¡No escribiste ningun nombre de país!"})
     }
-  
+    if(idPais !== Country.idCountry){
+        res.status(400).send({err: `¡No existe ningun país con ese nombre! ${idPais}`})
+    }
+}
 
-    console.log(detalleActividades,'detalleActividades')
 
-    let countryDetailAct={...countryDetail, "activityDetail": detalleActividades}
-
-    console.log(countryDetailAct,'countryDetailAct')
-// Los campos mostrados en la ruta principal para cada país (imagen de la bandera, nombre, código de país de 3 letras y continente)
-// [ ] Código de país de 3 letras (id)
-// [ ] Capital
-// [ ] Subregión
-// [ ] Área (Mostrarla en km2 o millones de km2)
-// [ ] Población
-// [ ] Actividades turísticas con toda su información asociada
-
-return res.status(200).send(countryDetailAct)
 };

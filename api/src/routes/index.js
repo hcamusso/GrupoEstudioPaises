@@ -26,16 +26,16 @@ const router = Router();
 // - POST /activity__:
 //   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de actividad turística por body
 //   - Crea una actividad turística en la base de datos
+
+
 const { listCountries } = require("../controllers/listCountries");
 router.get('/countries', listCountries);
 
 const { countryDetail } = require("../controllers/countryDetail");
 router.get('/countries/:idPais', countryDetail);
 
-// const { nameContry } = require("../controllers/nameContry");
-// router.get('/countries?name', listCountries);
 
-// const { activity } = require("../controllers/activity");
-// router.post('/activity', listCountries);
+const { activity } = require("../controllers/activity");
+router.post('/activity', activity);
 
 module.exports = router;
