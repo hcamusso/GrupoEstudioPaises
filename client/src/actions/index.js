@@ -1,12 +1,11 @@
-import axios from 'axios';
+import axios from 'axios'
 
-//todos los paises
-export function getApiTotal(payload) {
-  return function (dispatch) {
-    axios.get('/countries').then(res => {
-      return dispatch({ type: 'GET_COUNTRIES', payload: res.data });
-    });
-  };
+export function getCountries(){
+    return async function(dispatch){
+        const {data}= await axios.get('http://localhost:3001/countries');
+        return dispatch({ type:'GET_COUNTRIES', payload:data
+        })
+    }
 }
 //paises por nombre
 //postear actividad
