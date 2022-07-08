@@ -7,6 +7,11 @@
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
     "axios": "^0.27.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^8.0.2",
@@ -15,10 +20,11 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "sequelize": "^6.21.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

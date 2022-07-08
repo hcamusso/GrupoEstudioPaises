@@ -14,6 +14,7 @@ exports.listCountries = async (req,res) => {
         if(name) {
             console.log('dentro ')
             let pais = await Country.findAll({
+                order:[["idCountry"]],
                 where: {
                   name: {
                     [Op.iLike]: `%${name}%`,
@@ -24,7 +25,9 @@ exports.listCountries = async (req,res) => {
            
             return res.status(201).json(pais);
         }
-        const paises = await Country.findAll();
+        const paises = await Country.findAll({
+          order:[["idCountry"]]
+        });
        console.log('ruta listCountries')
        return res.status(200).json(paises)
     } catch (error) {
