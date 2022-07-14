@@ -25,7 +25,7 @@ export default function Home(){
           <h1>PAISES DEL MUNDO </h1>
        
           
-          <button onclick={e=>{handlerlClick(e)}}>
+          <button onClick={e=>{handlerlClick(e)}}>
               Volver a cargar 
           </button>
         <div>
@@ -43,11 +43,11 @@ export default function Home(){
             allCountries?.map((e) => {
 
               return (
-                <fragment>
+                <div key={e.idCountry}>
                   <Link to={"/home/"+ e.idCountry }>
-                    <Card name={e.name} imagen={e.imagen} continent={e.continent} key={e.idCountry}/>
+                    <Card name={e.name} imagen={e.imagen} continent={e.continent} />
                   </Link>
-                </fragment>
+                </div>
             )
            })
              }

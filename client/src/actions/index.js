@@ -16,5 +16,13 @@ export function getCountries(){
 //orden por continente
 //orden por actividades
 
+//HC
 
-  
+export function postActivity(payload){
+    return async function(dispatch){
+        const {data}= await axios.post('http://localhost:3001/activity',payload);
+        console.log (data);
+        return data;
+        }
+    }
+

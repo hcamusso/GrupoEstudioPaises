@@ -9,6 +9,11 @@ function  rootReducer (state = initialState, action) {
                 countriesall: action.payload,              
             }
         }
+    if (action.type === 'POST_ACTIVITY'){
+        return {
+            ...state,
+        }
+    }
      return state;
 
 }
